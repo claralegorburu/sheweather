@@ -19,6 +19,8 @@ function getWeather(response) {
 
   console.log(response.data);
   temperatureElement.innerHTML = Math.round(temperature);
+
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -58,7 +60,13 @@ function handleSearchSubmit(event) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
-function displayForecast() {
+function getForecast(city) {
+  let apiKey = "dd951o2a57d4a5945e3bta7c8a72f3a0";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
   let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
   forecastHtml = "";
 
@@ -82,4 +90,3 @@ function displayForecast() {
 }
 
 searchCity("New York");
-displayForecast();
